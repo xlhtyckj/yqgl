@@ -27,8 +27,22 @@ Vue.use(ElementUI)我们
     gt checkout -b 分支名，需要显示出是开发还是上线等各阶段状态
     git checkout -b dev-login
 > 新建组件+配置路由
-    
+> 注意：
+1. commint 每完成一个小功能就commit一次
+2. push 所有分支功能完成之后，合并到master后， 操作master 去完成
 
+# 01-项目-登录-引入表单组件
+> el-form 
+    1. 引入
+    2.调整标签(h2+el+button)
+> label-position="top" 通过该配置修改标签对齐方式
+   left 左对齐 
+   right 右对齐
+   top 顶部对齐
+# 02-项目-登录-样式调整
+> height:100%
+> 注意：div#app height:100%
+    
 
 
 
