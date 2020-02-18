@@ -19,6 +19,16 @@ Vue.use(ElementUI)我们
 6. git remote add origin https://github.com/xlhtyckj/yqgl.git 关联仓库 
 7. git push -u origin master 推送项目到仓库，需要输入用户密码 （之后再push,直接git push）
 
+四、新建登录窗口
+> 新建一个分支 登录功能
+> 查看当前分支
+    git branch
+> 创建分支 
+    gt checkout -b 分支名，需要显示出是开发还是上线等各阶段状态
+    git checkout -b dev-login
+> 新建组件+配置路由
+    
+
 
 
 
