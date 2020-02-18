@@ -16,6 +16,9 @@ Vue.use(ElementUI)我们
 3. git add .
 4. git commit -m "zhushi"
 5. 在代码托管平台（github）新建远程仓库 
-6. git push 
+6. git remote add origin https://github.com/xlhtyckj/yqgl.git 关联仓库 
+7. git push -u origin master 推送项目到仓库，需要输入用户密码 （之后再push,直接git push）
+
+
 
 
