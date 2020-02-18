@@ -43,8 +43,16 @@ Vue.use(ElementUI)我们
 > height:100%
 > 注意：div#app height:100%
 
-test
-    
+# 03-项目-登录-axios 插件
+> axios 不是vue插件，不能使用Vue.use(axios)
+```js
+    //插件模块
+    import axios from 'axios'
+    const MyHttpServer = {}
+    MyHttpServer.install = (Vue, options) => {
+    Vue.prototype.$http = axios
+    }
 
-
+    export default MyHttpServer
+```
 

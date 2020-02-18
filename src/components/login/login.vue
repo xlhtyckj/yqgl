@@ -23,6 +23,9 @@ export default {
             },
             top:'top'
         }
+    },
+    methods:{
+      
     }
 }
 </script>
