@@ -25,30 +25,44 @@ export default {
     };
   },
   methods: {
-    //登录请求
-    handleLogin() {
-      //    alert("test")
-      this.$http.post("login", this.formdata).then(res => {
-        console.log(res);
+    //登录请求 异步请求
+   async handleLogin() {
+    
+      // ES7 async+await
+
+       const res = await this.$http.post("login", this.formdata)
+      
         const {
           data,
           meta: { msg, status }
-        } = res.data
-        // alert(msg)
-        if(status ===200)
-        {
-          this.$router.push({name:'home'})
-          this.$message.success(msg)
+        } = res.data;
+       
+        if (status === 200) {
+          this.$router.push({ name: "home" });
+          this.$message.success(msg);
+        } else {
+          this.$message.error(msg);
         }
-        else
-        {
-          this.$message.error(msg)
-        }
+  
 
-      })
+      // this.$http.post("login", this.formdata).then(res => {
+      //   console.log(res);
+      //   const {
+      //     data,
+      //     meta: { msg, status }
+      //   } = res.data;
+      //   // alert(msg)
+      //   if (status === 200) {
+      //     this.$router.push({ name: "home" });
+      //     this.$message.success(msg);
+      //   } else {
+      //     this.$message.error(msg);
+      //   }
+      // })
+
     }
   }
-}
+};
 </script>
 
 <style scoped>
