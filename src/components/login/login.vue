@@ -36,8 +36,11 @@ export default {
           data,
           meta: { msg, status }
         } = res.data;
-       
+        console.log(res)
         if (status === 200) {
+          //登录成功
+          //0. 保存token
+          localStorage.setItem('token',data.token)
           this.$router.push({ name: "home" });
           this.$message.success(msg);
         } else {
