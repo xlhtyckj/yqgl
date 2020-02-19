@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login/login.vue'
+import Home from '@/components/home/home.vue'
 //@会默认导航到src目录
 
 
@@ -8,11 +9,13 @@ import Login from '@/components/login/login.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      name:'login',
-      path: '/login',
-      component:Login
-    }
-  ]
+    routes: [{
+        name: 'login',
+        path: '/login',
+        component: Login
+    }, {
+        name: 'home',
+        path: '/',
+        component: Home
+    }]
 })
