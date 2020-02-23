@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="1">
           <div>
-            <a href="#" class="loginout"><el-button>退出</el-button></a>
+            <a href="#" class="loginout"><el-button @click.prevent="handleSignOut()">退出</el-button></a>
           </div>
         </el-col>
       </el-row>
@@ -109,6 +109,30 @@ export default {
         if(!token)
         {
             this.$router.push({name:'login'})
+        }
+    },
+    methods:{
+        handleSignOut(){
+            // alert("signout")
+            this.$confirm('确定要退出吗？','提示',{
+                confirmButtonText:'确定',
+                cancelButtonText:'取消',
+                type:'warning'
+            })
+            .then(()=>{
+                localStorage.clear()
+                this.$message({
+                    type:'success',
+                    message:'退出成功!'
+                })
+                this.$router.push({name:'login'})
+            })
+            .catch(()=>{
+               this.$message({
+                   type:'inof',
+                   message:'取消退出！'
+               })
+            })
         }
     }
 
