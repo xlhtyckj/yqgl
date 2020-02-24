@@ -14,17 +14,16 @@
         </el-col>
         <el-col :span="1">
           <div>
-            <a href="#" class="loginout"><el-button @click.prevent="handleSignOut()">退出</el-button></a>
+            <a href="#" class="loginout">
+              <el-button @click.prevent="handleSignOut()">退出</el-button>
+            </a>
           </div>
         </el-col>
       </el-row>
     </el-header>
     <el-container>
       <el-aside class="aside" width="220px" height="100%">
-        <el-menu 
-            background-color="#fff"
-            :router="true"
-        >
+        <el-menu background-color="#fff" :router="true">
           <!-- 1 -->
           <el-submenu index="1">
             <template slot="title">
@@ -52,7 +51,7 @@
             </el-menu-item>
           </el-submenu>
           <!-- 3 -->
-           <el-submenu index="3">
+          <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>商品管理</span>
@@ -61,17 +60,17 @@
               <i class="el-icon-menu"></i>
               <span slot="title">商品列表</span>
             </el-menu-item>
-             <el-menu-item index="3-2">
+            <el-menu-item index="3-2">
               <i class="el-icon-menu"></i>
               <span slot="title">分类参数</span>
             </el-menu-item>
-             <el-menu-item index="3-3">
+            <el-menu-item index="3-3">
               <i class="el-icon-menu"></i>
               <span slot="title">商品分类</span>
             </el-menu-item>
           </el-submenu>
           <!-- 4 -->
-           <el-submenu index="4">
+          <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>订单管理</span>
@@ -82,7 +81,7 @@
             </el-menu-item>
           </el-submenu>
           <!-- 5 -->
-           <el-submenu index="5">
+          <el-submenu index="5">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>统计管理</span>
@@ -96,49 +95,46 @@
       </el-aside>
       <el-container>
         <el-main class="main">
-            <router-view></router-view>
+          <router-view></router-view>
         </el-main>
-        <el-footer class="footer">底部</el-footer>
       </el-container>
+      <!-- <el-footer class="footer">底部</el-footer> -->
     </el-container>
   </el-container>
 </template>
 
 <script>
 export default {
-
-    beforeCreate(){
-        const token = localStorage.getItem("token")
-        if(!token)
-        {
-            this.$router.push({name:'login'})
-        }
-    },
-    methods:{
-        handleSignOut(){
-            // alert("signout")
-            this.$confirm('确定要退出吗？','提示',{
-                confirmButtonText:'确定',
-                cancelButtonText:'取消',
-                type:'warning'
-            })
-            .then(()=>{
-                localStorage.clear()
-                this.$message({
-                    type:'success',
-                    message:'退出成功!'
-                })
-                this.$router.push({name:'login'})
-            })
-            .catch(()=>{
-               this.$message({
-                   type:'inof',
-                   message:'取消退出！'
-               })
-            })
-        }
+  beforeCreate() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      this.$router.push({ name: "login" });
     }
-
+  },
+  methods: {
+    handleSignOut() {
+      // alert("signout")
+      this.$confirm("确定要退出吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          localStorage.clear();
+          this.$message({
+            type: "success",
+            message: "退出成功!"
+          });
+          this.$router.push({ name: "login" });
+        })
+        .catch(() => {
+          this.$message({
+            type: "inof",
+            message: "取消退出！"
+          });
+        });
+    }
+  }
 };
 </script>
 
