@@ -23,12 +23,35 @@
     <el-table :data="users" style="width: 100%">
       <el-table-column prop="id" label="#" width="60"></el-table-column>
       <el-table-column prop="username" label="姓名" width="100"></el-table-column>
-      <el-table-column prop="role_name" label="角色名称" width="100"></el-table-column>
+      <el-table-column prop="role_name" label="角色名称"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
+      <!-- 过滤器使用，原使用方法：{{create_time | fmtdate}} -->
+      <!-- 如果单元格内显示的内容不是字符串（文本），需要给被显示的内容外层包裹一个template -->
+      <!-- template 内部要用数据 设置slot-scope 属性，该属性的值是要用数据create_time 的数据源users -->
+      <!-- slot-scope 的值users其实就是el-table绑定的数据users，
+      users.row-> 数组中的每个对象-->
+      <!-- slot-scope 属性会自动寻找上一级数据源，并将数据源赋值给slot-scope的属性值scope -->
       <el-table-column prop="create_time" label="创建时间"></el-table-column>
-      <el-table-column type prop="mg_state" label="状态"></el-table-column>
-      <el-table-column label="操作"></el-table-column>
+
+      <el-table-column label="创建时间" with="10">
+        <template slot-scope="scope">{{scope.row.create_time | fmtdate}}</template>
+      </el-table-column>
+
+      <el-table-column label="状态" width="60">
+        <template slot-scope="scope" >
+          <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="150">
+        <template>
+          <el-row>
+            <el-button size="mini" plain type="primary" icon="el-icon-edit" circle></el-button>
+            <el-button size="mini" plain type="danger" icon="el-icon-delete" circle></el-button>
+            <el-button size="mini" plain type="success" icon="el-icon-check" circle></el-button>
+          </el-row>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
 </template>

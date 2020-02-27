@@ -7,13 +7,16 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/reset.css'
 import MyHttpServer from '@/plugins/http.js'
-
+import moment from 'moment'
 //回顾
 // import axios from 'axios'
 // Vue.prototype.$http=axios
 // Vue.use(axios)
 
-
+//添加过滤器 时间过滤器 moment 
+Vue.filter('fmtdate', (v) => {
+    return moment(v).format('YYYY-MM-DD hh:mm:ss')
+})
 
 Vue.use(ElementUI)
 Vue.use(MyHttpServer)
