@@ -13,8 +13,9 @@
           v-model="query"
           class="input-query"
           clearable
+          @clear="handleQuery"
         >
-          <el-button slot="append" icon="el-icon-search" @click.prevent="handleQuery"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click.prevent="handleQuery" ></el-button>
         </el-input>
         <el-button type="primary" plain>添加用户</el-button>
       </el-col>
@@ -39,7 +40,7 @@
       </el-table-column>
 
       <el-table-column label="状态" width="60">
-        <template slot-scope="scope" >
+        <template slot-scope="scope">
           <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         </template>
       </el-table-column>
@@ -53,6 +54,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页功能 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pagenum"
+      :page-sizes="[1,5 ,10, 100]"
+      :page-size="1"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    ></el-pagination>
   </el-card>
 </template>
 
@@ -64,36 +75,25 @@ export default {
       select: "",
       users: [],
       pagenum: 1,
-      pagesize: 10,
-      total: 0,
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      pagesize: 1,
+      total: 0
     };
   },
   created() {
     this.getUserList();
   },
   methods: {
+    handleSizeChange(val) {
+      this.pagesize=val
+      this.pagenum=1
+      this.getUserList()
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.pagenum=val
+      this.getUserList()
+      console.log(`当前页: ${val}`);
+    },
     handleQuery() {
       //   this.$message("查询")
       this.getUserList();
