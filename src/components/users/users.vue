@@ -15,9 +15,9 @@
           clearable
           @clear="handleQuery"
         >
-          <el-button slot="append" icon="el-icon-search" @click.prevent="handleQuery" ></el-button>
+          <el-button slot="append" icon="el-icon-search" @click.prevent="handleQuery"></el-button>
         </el-input>
-        <el-button type="primary" plain>添加用户</el-button>
+        <el-button type="primary" plain @click.prevent="handleShowAddUser()">添加用户</el-button>
       </el-col>
     </el-row>
     <!-- 表格数据 -->
@@ -59,11 +59,49 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="pagenum"
-      :page-sizes="[1,5 ,10, 100]"
+      :page-sizes="[1,2,5,10, 100]"
       :page-size="1"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     ></el-pagination>
+    <!-- 弹出对话框:添加用户 -->
+    <el-dialog
+      title="添加用户"
+      :visible.sync="dialogFormVisibleAdd"
+      @close="handleAddDialogClose()"
+      @opened="handleAddDialogOpen()"
+    >
+      <el-form :model="form" :label-width="formLabelWidth">
+        <el-form-item label="用户名">
+          <el-input
+            v-model="form.username"
+            autocomplete="off"
+            clearable
+            :style="style"
+            ref="username"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input
+            v-model="form.password"
+            autocomplete="off"
+            clearable
+            :style="style"
+            ref="password"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="form.email" autocomplete="off" clearable :style="style"></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="form.mobile" autocomplete="off" clearable :style="style"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handleCancel()">取 消</el-button>
+        <el-button type="primary" @click="handleAddUser()">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -76,26 +114,73 @@ export default {
       users: [],
       pagenum: 1,
       pagesize: 1,
-      total: 0
+      total: 0,
+      formLabelWidth: "100px",
+      dialogFormVisibleAdd: false,
+      style: {
+        width: "90%"
+      },
+      form: {
+        username: "",
+        password: "",
+        email: "",
+        mobile: ""
+      }
     };
   },
   created() {
     this.getUserList();
   },
   methods: {
+    handleAddDialogOpen() {
+      this.form = {};
+      this.$refs.username.focus();
+    },
+    handleAddDialogClose() {
+      this.form = {};
+      this.dialogFormVisibleAdd = false;
+    },
+    handleCancel() {
+      this.dialogFormVisibleAdd = false;
+    },
+    async handleAddUser() {
+      const res = await this.$http.post("users", this.form);
+      console.log(res);
+      const {
+        meta: { msg, status },
+        data
+      } = res.data;
+      if (status === 201) {
+        this.$message.success(msg);
+        this.form = {};
+        this.dialogFormVisibleAdd = false;
+        this.getUserList();
+      } else {
+        this.$message.warning(msg);
+        if (msg === "密码不能为空") {
+          this.$refs.password.focus();
+        } else {
+          this.$refs.username.focus();
+        }
+      }
+    },
+    handleShowAddUser() {
+      this.dialogFormVisibleAdd = true;
+    },
     handleSizeChange(val) {
-      this.pagesize=val
-      this.pagenum=1
-      this.getUserList()
+      this.pagesize = val;
+      this.pagenum = 1;
+      this.getUserList();
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.pagenum=val
-      this.getUserList()
+      this.pagenum = val;
+      this.getUserList();
       console.log(`当前页: ${val}`);
     },
     handleQuery() {
       //   this.$message("查询")
+      this.pagenum = 1;
       this.getUserList();
     },
     async getUserList() {
@@ -124,7 +209,7 @@ export default {
           this.total = total;
 
           //3、提示msg信息
-          this.$message.success(msg);
+          // this.$message.success(msg);
         } else {
           this.$message.error(msg);
         }
